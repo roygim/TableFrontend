@@ -1,11 +1,11 @@
 :root {
-  --pink: #e909c3;
+  --pink: #ba6dad;
   --white: #ffffff;
   --black: #000000;
 }
 
 body {
-  background: var(--white);
+  background: var(--pink);
 }
 
 li {
