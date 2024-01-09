@@ -1,3 +1,19 @@
+:root {
+  --pink: #e909c3;
+  --white: #ffffff;
+  --black: #000000;
+}
+
+body {
+  background: var(--white);
+}
+
+li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
 .App {
   text-align: center;
 }
