@@ -1,5 +1,5 @@
 import React from 'react';
-import { Box, Button, DialogActions, DialogContent, DialogTitle, IconButton } from '@mui/material';
+import { Box, Button, DialogActions, DialogContent, DialogTitle, FormControl, FormControlLabel, FormLabel, IconButton, Radio, RadioGroup } from '@mui/material';
 import CloseIcon from '@mui/icons-material/Close';
 import { DialogWarp, TextFieldWrap } from './dialog.css';
 import { ErrorMessage, Form, Formik } from "formik";
@@ -12,6 +12,8 @@ function DataDialog({ open, closeDialog, currentData }) {
         name: currentData?.name || "",
         email: currentData?.email || "",
         birthday: null,
+        gender: currentData?.gender || null,
+        phone: currentData?.phone || ""
     }
 
     const formVaildation = Yup.object({
@@ -19,6 +21,7 @@ function DataDialog({ open, closeDialog, currentData }) {
         name: Yup.string().required("שדה חובה"),
         email: Yup.string().email('מייל לא תקין'),
         birthday: Yup.date().typeError('שדה חובה').required(),
+        phone: Yup.number().typeError('מספרים בלבד').min(1, "מספר גדול מאפס"),
     });
 
     const submit = (values, props) => {
@@ -96,6 +99,34 @@ function DataDialog({ open, closeDialog, currentData }) {
                                         error={props.errors.email && props.touched.email}
                                     />
                                     <MyDatePicker name="birthday" initVal={currentData?.birthday} />
+                                    <TextFieldWrap
+                                        label="טלפון"
+                                        name="phone"
+                                        type="number"
+                                        fullWidth
+                                        variant="standard"
+                                        value={props.values.phone}
+                                        onChange={props.handleChange}
+                                        onBlur={props.handleBlur}
+                                        helperText={<ErrorMessage name="phone" />}
+                                        error={props.errors.phone && props.touched.phone}
+                                        min="1"
+                                        sx={{ mt: "16px" }}
+                                    />
+                                    <FormControl component="fieldset" sx={{ mt: "16px" }}>
+                                        <FormLabel component="legend">מין</FormLabel>
+                                        <RadioGroup
+                                            name={"gender"}
+                                            value={props.values.gender}
+                                            onChange={props.handleChange}
+                                            onBlur={props.handleBlur}
+                                            row
+                                        >
+                                            <FormControlLabel value="Male" control={<Radio />} label="זכר" />
+                                            <FormControlLabel value="Female" control={<Radio />} label="נקבה" />
+                                            <FormControlLabel value="Other" control={<Radio />} label="אחר" />
+                                        </RadioGroup>
+                                    </FormControl>
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={closeDialog}>ביטול</Button>

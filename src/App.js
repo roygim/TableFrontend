@@ -15,7 +15,7 @@ import DataDialog from './components/data-dialog/dialog';
 
 const data = [
   createData('111111111', 'רועי גרומט', 'roygim@gmail.com', '06/17/1981', 'Male', '0545555555'),
-  createData('222222222', 'רועי גרומט', 'roygim@gmail.com', '01/12/1977', 'Male', '0545555555'),
+  createData('222222222', 'רועי גרומט', 'roygim@gmail.com', '01/12/1977', 'Female', '0545555555'),
   createData('333333333', 'רועי גרומט', 'roygim@gmail.com', '02/28/2022', 'Male', '0545555555'),
 ]
 
