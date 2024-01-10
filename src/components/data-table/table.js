@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React from 'react';
 import Table from '@mui/material/Table';
 import TableBody from '@mui/material/TableBody';
 import TableCell from '@mui/material/TableCell';
@@ -12,15 +12,7 @@ import DeleteIcon from '@mui/icons-material/Delete';
 import { format } from 'date-fns';
 import { he } from 'date-fns/locale';
 
-function DataTable({ data, addOrUpdateData }) {
-  const [rows, setRows] = useState([]);
-
-  useEffect(() => {
-    if (data && data.length > 0) {
-      setRows(data)
-    }
-  }, [data])
-
+function DataTable({ data = [], addOrUpdateData }) {
   return (
     <Box className="DataTable">
       <TableContainer component={Paper} sx={{ maxHeight: 540 }}>
@@ -38,7 +30,7 @@ function DataTable({ data, addOrUpdateData }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {rows.map((row, index) => (
+            {data.map((row, index) => (
               <TableRowWrap
                 key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
