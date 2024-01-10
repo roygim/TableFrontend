@@ -9,6 +9,8 @@ import Paper from '@mui/material/Paper';
 import { Box, Button, IconButton } from '@mui/material';
 import { HeaderCellWrap, TableRowWrap } from './table.css';
 import DeleteIcon from '@mui/icons-material/Delete';
+import { format } from 'date-fns';
+import { he } from 'date-fns/locale';
 
 function DataTable({ data, addOrUpdateData }) {
   const [rows, setRows] = useState([]);
@@ -44,7 +46,7 @@ function DataTable({ data, addOrUpdateData }) {
                 <TableCell>{row.id}</TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.email}</TableCell>
-                <TableCell>{row.birthday}</TableCell>
+                <TableCell>{format(new Date(row.birthday), "dd/MM/yy", { locale: he })}</TableCell>
                 <TableCell>{row.gender}</TableCell>
                 <TableCell>{row.phone}</TableCell>
                 <TableCell>

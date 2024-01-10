@@ -1,8 +1,9 @@
 import { FormHelperText } from "@mui/material";
 import { DatePicker } from "@mui/x-date-pickers";
 import { useField } from "formik";
+import { useEffect } from "react";
 
-const MyDatePicker = ({ name = "" }) => {
+const MyDatePicker = ({ name = "", initVal }) => {
     const [field, meta, helpers] = useField(name);
 
     const { value } = meta;
@@ -11,6 +12,12 @@ const MyDatePicker = ({ name = "" }) => {
     const configTextfield = {
         ...field,
     }
+
+    useEffect(() => {
+        if (setValue && initVal) {
+            setValue(new Date(initVal))
+        }
+    }, [setValue, initVal])
 
     if (meta && meta.touched && meta.error) {
         configTextfield.error = true;

@@ -8,7 +8,7 @@ import MyDatePicker from '../../core/formik/my-date-picker';
 
 function DataDialog({ open, closeDialog, currentData }) {
     const initialValue = {
-        name: "",
+        name: currentData?.name,
         email: "",
         birthday: null,
     }
@@ -20,7 +20,6 @@ function DataDialog({ open, closeDialog, currentData }) {
     });
 
     const submit = (values, props) => {
-        alert(1)
         console.log(values);
     }
 
@@ -80,7 +79,7 @@ function DataDialog({ open, closeDialog, currentData }) {
                                         helperText={<ErrorMessage name="email" />}
                                         error={props.errors.email && props.touched.email}
                                     />
-                                    <MyDatePicker name="birthday" />
+                                    <MyDatePicker name="birthday" initVal={currentData?.birthday} />
                                 </DialogContent>
                                 <DialogActions>
                                     <Button onClick={closeDialog}>ביטול</Button>
