@@ -8,10 +8,9 @@ import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import { Box, Button, IconButton } from '@mui/material';
 import { HeaderCellWrap, TableRowWrap } from './table.css';
-import AddIcon from '@mui/icons-material/Add';
 import DeleteIcon from '@mui/icons-material/Delete';
 
-function DataTable({ data }) {
+function DataTable({ data, addOrUpdateData }) {
   const [rows, setRows] = useState([]);
 
   useEffect(() => {
@@ -20,30 +19,8 @@ function DataTable({ data }) {
     }
   }, [data])
 
-  const addData = (id) => {
-    console.log(id)
-    //add
-    // const newData = createData('88888888', 'רועי גרומט', 'roygim@gmail.com', '01/01/2001', 'Male', '0545555555')
-    // setRows(prev => [...prev, newData])
-
-    //update
-    // const newData = data[1]
-    // newData.id = '777777777'
-    // setRows(data)
-    return
-  }
-
   return (
-    <Box className="DataTable" sx={{ textAlign: "left" }}>
-      <Button
-        variant="contained"
-        sx={{ mb: "14px" }}
-        disableElevation
-        endIcon={<AddIcon />}
-        onClick={() => addData()}
-      >
-        הוסף
-      </Button>
+    <Box className="DataTable">
       <TableContainer component={Paper} sx={{ maxHeight: 540 }}>
         <Table stickyHeader sx={{ minWidth: 650 }} aria-label="simple table">
           <TableHead>
@@ -71,7 +48,11 @@ function DataTable({ data }) {
                 <TableCell>{row.gender}</TableCell>
                 <TableCell>{row.phone}</TableCell>
                 <TableCell>
-                  <Button>עריכה</Button>
+                  <Button
+                    onClick={() => addOrUpdateData(row.id)}
+                  >
+                    עריכה
+                  </Button>
                 </TableCell>
                 <TableCell sx={{ width: "50px" }}>
                   <IconButton aria-label="delete">

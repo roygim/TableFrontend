@@ -15,8 +15,3 @@ export const TableRowWrap = styled((props) => <TableRow {...props} />)(
       }
     `
 );
-
-export const TableCellWrap = styled((props) => <TableCell {...props} />)(
-    ({ theme }) => `
-    `
-);

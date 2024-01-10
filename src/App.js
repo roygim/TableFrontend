@@ -1,13 +1,17 @@
 import './App.css';
-import * as React from 'react';
+import React, { useState } from 'react';
 
 import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
 import createCache from "@emotion/cache";
 import { CacheProvider } from "@emotion/react";
 
-import { Box } from '@mui/material';
-import DataTable from "./components/table/table";
+import { Box, Button } from '@mui/material';
+import DataTable from "./components/data-table/table";
+import AddIcon from '@mui/icons-material/Add';
+import DataDialog from './components/data-dialog/dialog';
+
+
 
 const data = [
   createData('111111111', 'רועי גרומט', 'roygim@gmail.com', '01/01/2001', 'Male', '0545555555'),
@@ -26,10 +30,45 @@ function App() {
     stylisPlugins: [prefixer, rtlPlugin],
   });
 
+  const [open, setOpen] = useState(false)
+  const [currentData, setCurrentData] = useState(null)
+
+  const addOrUpdateData = (id) => {
+    if (id) {
+      const dataObj = data.find(d => d.id === id)
+      console.log(dataObj)
+      setCurrentData(dataObj)
+    }
+    setOpen(true)
+    //add
+    // const newData = createData('88888888', 'רועי גרומט', 'roygim@gmail.com', '01/01/2001', 'Male', '0545555555')
+    // setRows(prev => [...prev, newData])
+
+    //update
+    // const newData = data[1]
+    // newData.id = '777777777'
+    // setRows(data)
+  }
+
+  const closeDialog = () => {
+    setCurrentData(null)
+    setOpen(false)
+  }
+
   return (
     <Box dir="rtl" className="App">
       <CacheProvider value={cacheRtl}>
-        <DataTable data={data} />
+        <Button
+          variant="contained"
+          sx={{ mb: "14px" }}
+          disableElevation
+          endIcon={<AddIcon />}
+          onClick={() => addOrUpdateData()}
+        >
+          הוסף
+        </Button>
+        <DataTable data={data} addOrUpdateData={addOrUpdateData} />
+        <DataDialog open={open} closeDialog={closeDialog} currentData={currentData} />
       </CacheProvider>
     </Box>
   );

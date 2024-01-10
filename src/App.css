@@ -15,7 +15,14 @@ li {
 }
 
 .App {
-  text-align: center;
+  width: 1240px;
+  margin: auto;
+  text-align: right;
+  padding-top: 8px;
+
+  @media (max-width: 1240px) {
+    width: 100%;
+  }
 }
 
 .App-logo {
