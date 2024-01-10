@@ -8,15 +8,17 @@ import MyDatePicker from '../../core/formik/my-date-picker';
 
 function DataDialog({ open, closeDialog, currentData }) {
     const initialValue = {
-        name: currentData?.name,
-        email: "",
+        id: currentData?.id || "",
+        name: currentData?.name || "",
+        email: currentData?.email || "",
         birthday: null,
     }
 
     const formVaildation = Yup.object({
+        id: Yup.number().typeError('מספרים בלבד').min(1, "מספר גדול מאפס").required("שדה חובה"),
         name: Yup.string().required("שדה חובה"),
         email: Yup.string().email('מייל לא תקין'),
-        birthday: Yup.date().typeError('שדה חובה').required(),      
+        birthday: Yup.date().typeError('שדה חובה').required(),
     });
 
     const submit = (values, props) => {
@@ -57,6 +59,20 @@ function DataDialog({ open, closeDialog, currentData }) {
                         return (
                             <Form>
                                 <DialogContent sx={{ pt: "0" }}>
+                                    <TextFieldWrap
+                                        label="תעודת זהות"
+                                        name="id"
+                                        type="number"
+                                        fullWidth
+                                        variant="standard"
+                                        value={props.values.id}
+                                        onChange={props.handleChange}
+                                        onBlur={props.handleBlur}
+                                        helperText={<ErrorMessage name="id" />}
+                                        error={props.errors.id && props.touched.id}
+                                        disabled={currentData ? true : false}
+                                        min="1"
+                                    />
                                     <TextFieldWrap
                                         label="שם"
                                         name="name"
