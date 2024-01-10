@@ -1,5 +1,5 @@
 import './App.css';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 
 import rtlPlugin from "stylis-plugin-rtl";
 import { prefixer } from "stylis";
@@ -10,7 +10,7 @@ import { Box, Button } from '@mui/material';
 import DataTable from "./components/data-table/table";
 import AddIcon from '@mui/icons-material/Add';
 import DataDialog from './components/data-dialog/dialog';
-
+import { getAllData } from "./services/data-service";
 
 
 const data = [
@@ -24,7 +24,6 @@ function createData(id, name, email, birthday, gender, phone) {
 }
 
 function App() {
-
   const cacheRtl = createCache({
     key: "muirtl",
     stylisPlugins: [prefixer, rtlPlugin],
@@ -33,6 +32,15 @@ function App() {
   const [open, setOpen] = useState(false)
   const [currentData, setCurrentData] = useState(null)
 
+  useEffect(() => {
+    async function handleGetData() {
+      const res = await getAllData()
+      console.log(res)
+    }
+
+    handleGetData()
+  }, [])
+
   const addOrUpdateData = (id) => {
     if (id) {
       const dataObj = data.find(d => d.id === id)
@@ -40,14 +48,6 @@ function App() {
       setCurrentData(dataObj)
     }
     setOpen(true)
-    //add
-    // const newData = createData('88888888', 'רועי גרומט', 'roygim@gmail.com', '01/01/2001', 'Male', '0545555555')
-    // setRows(prev => [...prev, newData])
-
-    //update
-    // const newData = data[1]
-    // newData.id = '777777777'
-    // setRows(data)
   }
 
   const closeDialog = () => {
