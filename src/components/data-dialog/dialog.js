@@ -8,7 +8,8 @@ import MyDatePicker from '../../core/formik/my-date-picker';
 
 function DataDialog({ open, closeDialog, currentData }) {
     const initialValue = {
-        id: currentData?.id || "",
+        id: currentData?.id || 0,
+        userId: currentData?.userId || "",
         name: currentData?.name || "",
         email: currentData?.email || "",
         birthday: null,
@@ -17,7 +18,7 @@ function DataDialog({ open, closeDialog, currentData }) {
     }
 
     const formVaildation = Yup.object({
-        id: Yup.number().typeError('מספרים בלבד').min(1, "מספר גדול מאפס").required("שדה חובה"),
+        userId: Yup.number().typeError('מספרים בלבד').min(1, "מספר גדול מאפס").required("שדה חובה"),
         name: Yup.string().required("שדה חובה"),
         email: Yup.string().email('מייל לא תקין'),
         birthday: Yup.date().typeError('שדה חובה').required(),
@@ -64,15 +65,15 @@ function DataDialog({ open, closeDialog, currentData }) {
                                 <DialogContent sx={{ pt: "0" }}>
                                     <TextFieldWrap
                                         label="תעודת זהות"
-                                        name="id"
+                                        name="userId"
                                         type="number"
                                         fullWidth
                                         variant="standard"
-                                        value={props.values.id}
+                                        value={props.values.userId}
                                         onChange={props.handleChange}
                                         onBlur={props.handleBlur}
-                                        helperText={<ErrorMessage name="id" />}
-                                        error={props.errors.id && props.touched.id}
+                                        helperText={<ErrorMessage name="userId" />}
+                                        error={props.errors.userId && props.touched.userId}
                                         disabled={currentData ? true : false}
                                         min="1"
                                     />

@@ -13,6 +13,16 @@ import { format } from 'date-fns';
 import { he } from 'date-fns/locale';
 
 function DataTable({ data = [], addOrUpdateData }) {
+  
+  const getBirthdayValue = (birthday) => {
+    try {
+      const val = format(new Date(birthday), "dd/MM/yy", { locale: he })
+      return val
+    } catch (error) {
+      return "N\\A";
+    }
+  }
+
   return (
     <Box className="DataTable">
       <TableContainer component={Paper} sx={{ maxHeight: 540 }}>
@@ -35,10 +45,10 @@ function DataTable({ data = [], addOrUpdateData }) {
                 key={index}
                 sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
               >
-                <TableCell>{row.id}</TableCell>
+                <TableCell>{row.userId}</TableCell>
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.email}</TableCell>
-                <TableCell>{format(new Date(row.birthday), "dd/MM/yy", { locale: he })}</TableCell>
+                <TableCell>{getBirthdayValue(row.birthday)}</TableCell>
                 <TableCell>{row.gender}</TableCell>
                 <TableCell>{row.phone}</TableCell>
                 <TableCell>
