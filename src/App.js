@@ -13,6 +13,8 @@ import DataDialog from './components/data-dialog/dialog';
 import { getAllData } from "./services/data-service";
 
 function App() {
+  console.log('test')
+  
   const cacheRtl = createCache({
     key: "muirtl",
     stylisPlugins: [prefixer, rtlPlugin],
