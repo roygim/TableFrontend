@@ -8,7 +8,7 @@ import MyDatePicker from '../../core/formik/my-date-picker';
 import { format } from 'date-fns';
 import { he } from 'date-fns/locale';
 
-function DataDialog({ open, closeDialog, currentData, handleAddUser }) {
+function DataDialog({ open, closeDialog, currentData, handleAddUser, handleUpdateUser }) {
     const initialValue = {
         id: currentData?.id || 0,
         userId: currentData?.userId || "",
@@ -29,7 +29,15 @@ function DataDialog({ open, closeDialog, currentData, handleAddUser }) {
 
     const submit = (values, props) => {
         if (currentData) {
-
+            const updateUser = {
+                userId: values.userId.toString(),
+                name: values.name,
+                email: values.email,
+                birthday: format(new Date(values.birthday), "MM/dd/yy", { locale: he }),
+                gender: values.gender || '',
+                phone: values.phone.toString(),
+            }
+            handleUpdateUser(currentData.id, updateUser)
         } else {
             const newUser = {
                 userId: values.userId.toString(),

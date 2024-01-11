@@ -10,7 +10,7 @@ import { Box, Button } from '@mui/material';
 import DataTable from "./components/data-table/table";
 import AddIcon from '@mui/icons-material/Add';
 import DataDialog from './components/data-dialog/dialog';
-import { addData, deleteData, getAllData } from "./services/data-service";
+import { addData, deleteData, getAllData, updateData } from "./services/data-service";
 
 function App() {
   const cacheRtl = createCache({
@@ -24,12 +24,6 @@ function App() {
 
   useEffect(() => {
     getAllUsers()
-    // async function handleGetData() {
-    //   const res = await getAllData()
-    //   setData(res)
-    // }
-
-    // handleGetData()
   }, [])
 
   const getAllUsers = async (id) => {
@@ -42,6 +36,19 @@ function App() {
       const res = await addData(data)
       if (res) {
         // alert('יוזר הוסף בהצלחה')
+        closeUserDialog()
+        await getAllUsers()
+      }
+    } catch (error) {
+      alert('אירעה שגיאה')
+    }
+  }
+
+  const handleUpdateUser = async (id, data) => {
+    try {
+      const res = await updateData(id, data)
+      if (res) {
+        // alert('יוזר עודכן בהצלחה')
         closeUserDialog()
         await getAllUsers()
       }
@@ -88,7 +95,7 @@ function App() {
           הוסף
         </Button>
         <DataTable data={data} addOrUpdateData={openUserDialog} deleteUser={deleteUser} />
-        <DataDialog open={open} closeDialog={closeUserDialog} currentData={currentData} handleAddUser={handleAddUser} />
+        <DataDialog open={open} closeDialog={closeUserDialog} currentData={currentData} handleAddUser={handleAddUser} handleUpdateUser={handleUpdateUser} />
       </CacheProvider>
     </Box>
   );

@@ -16,6 +16,17 @@ export const addData = async (data) => {
         return response.data;
     } catch (err) {
         console.error('error - deleteData')
+        throw err
+    }
+};
+
+export const updateData = async (id, data) => {
+    try {
+        const response = await axios.put(`${process.env.REACT_APP_API_URL}/Table/UpdateUser/${id}`, data)
+        return response.data;
+    } catch (err) {
+        console.error('error - deleteData')
+        throw err
     }
 };
 
@@ -26,5 +37,6 @@ export const deleteData = async (id) => {
         return response.data;
     } catch (error) {
         console.log('error - deleteData')
+        throw error
     }
 }
