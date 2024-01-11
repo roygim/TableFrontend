@@ -5,8 +5,10 @@ import { DialogWarp, TextFieldWrap } from './dialog.css';
 import { ErrorMessage, Form, Formik } from "formik";
 import * as Yup from "yup";
 import MyDatePicker from '../../core/formik/my-date-picker';
+import { format } from 'date-fns';
+import { he } from 'date-fns/locale';
 
-function DataDialog({ open, closeDialog, currentData }) {
+function DataDialog({ open, closeDialog, currentData, handleAddUser }) {
     const initialValue = {
         id: currentData?.id || 0,
         userId: currentData?.userId || "",
@@ -26,7 +28,19 @@ function DataDialog({ open, closeDialog, currentData }) {
     });
 
     const submit = (values, props) => {
-        console.log(values);
+        if (currentData) {
+
+        } else {
+            const newUser = {
+                userId: values.userId.toString(),
+                name: values.name,
+                email: values.email,
+                birthday: format(new Date(values.birthday), "MM/dd/yy", { locale: he }),
+                gender: values.gender || '',
+                phone: values.phone.toString(),
+            }
+            handleAddUser(newUser)
+        }
     }
 
     return (

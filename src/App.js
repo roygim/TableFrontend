@@ -10,7 +10,7 @@ import { Box, Button } from '@mui/material';
 import DataTable from "./components/data-table/table";
 import AddIcon from '@mui/icons-material/Add';
 import DataDialog from './components/data-dialog/dialog';
-import { getAllData } from "./services/data-service";
+import { addData, deleteData, getAllData } from "./services/data-service";
 
 function App() {
   const cacheRtl = createCache({
@@ -23,24 +23,54 @@ function App() {
   const [currentData, setCurrentData] = useState(null)
 
   useEffect(() => {
-    async function handleGetData() {
-      const res = await getAllData()
-      setData(res)
-    }
+    getAllUsers()
+    // async function handleGetData() {
+    //   const res = await getAllData()
+    //   setData(res)
+    // }
 
-    handleGetData()
+    // handleGetData()
   }, [])
 
-  const addOrUpdateData = (id) => {
+  const getAllUsers = async (id) => {
+    const res = await getAllData()
+    setData(res)
+  }
+
+  const handleAddUser = async (data) => {
+    try {
+      const res = await addData(data)
+      if (res) {
+        // alert('יוזר הוסף בהצלחה')
+        closeUserDialog()
+        await getAllUsers()
+      }
+    } catch (error) {
+      alert('אירעה שגיאה')
+    }
+  }
+
+  const deleteUser = async (id) => {
+    try {
+      const res = await deleteData(id)
+      if (res) {
+        // alert('יוזר נמחק בהצלחה')
+        await getAllUsers()
+      }
+    } catch (error) {
+      alert('אירעה שגיאה')
+    }
+  }
+
+  const openUserDialog = (id) => {
     if (id) {
       const dataObj = data.find(d => d.id === id)
-      console.log(dataObj)
       setCurrentData(dataObj)
     }
     setOpen(true)
   }
 
-  const closeDialog = () => {
+  const closeUserDialog = () => {
     setCurrentData(null)
     setOpen(false)
   }
@@ -53,12 +83,12 @@ function App() {
           sx={{ mb: "14px" }}
           disableElevation
           endIcon={<AddIcon />}
-          onClick={() => addOrUpdateData()}
+          onClick={() => openUserDialog()}
         >
           הוסף
         </Button>
-        <DataTable data={data} addOrUpdateData={addOrUpdateData} />
-        <DataDialog open={open} closeDialog={closeDialog} currentData={currentData} />
+        <DataTable data={data} addOrUpdateData={openUserDialog} deleteUser={deleteUser} />
+        <DataDialog open={open} closeDialog={closeUserDialog} currentData={currentData} handleAddUser={handleAddUser} />
       </CacheProvider>
     </Box>
   );

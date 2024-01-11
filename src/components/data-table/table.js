@@ -11,9 +11,10 @@ import { HeaderCellWrap, TableRowWrap } from './table.css';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { format } from 'date-fns';
 import { he } from 'date-fns/locale';
+import { getGender } from "../../core/util/methods";
 
-function DataTable({ data = [], addOrUpdateData }) {
-  
+function DataTable({ data = [], addOrUpdateData, deleteUser }) {
+
   const getBirthdayValue = (birthday) => {
     try {
       const val = format(new Date(birthday), "dd/MM/yy", { locale: he })
@@ -49,7 +50,7 @@ function DataTable({ data = [], addOrUpdateData }) {
                 <TableCell>{row.name}</TableCell>
                 <TableCell>{row.email}</TableCell>
                 <TableCell>{getBirthdayValue(row.birthday)}</TableCell>
-                <TableCell>{row.gender}</TableCell>
+                <TableCell>{getGender(row.gender)}</TableCell>
                 <TableCell>{row.phone}</TableCell>
                 <TableCell>
                   <Button
@@ -59,7 +60,10 @@ function DataTable({ data = [], addOrUpdateData }) {
                   </Button>
                 </TableCell>
                 <TableCell sx={{ width: "50px" }}>
-                  <IconButton aria-label="delete">
+                  <IconButton
+                    aria-label="delete"
+                    onClick={() => deleteUser(row.id)}
+                  >
                     <DeleteIcon />
                   </IconButton>
                 </TableCell>
