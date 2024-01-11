@@ -2,7 +2,8 @@ import axios from "axios";
 
 export const getAllData = async () => {
     try {
-        const response = await axios.get("http://localhost:5109/api/Table/GetAll");
+        const url = `${process.env.REACT_APP_API_URL}/Table/GetAll`
+        const response = await axios.get(url);
         return response.data;
     } catch (error) {
         console.log('error - getAllData')
